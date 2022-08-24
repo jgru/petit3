@@ -1,0 +1,142 @@
+#+title: petit3
+#+author: jgru
+
+#+html: <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg?raw=true"/></a>
+
+Python3 port of the classic =petit= utility for inspecting log files.
+
+* :exclamation: Disclaimer:
+Note that this tool is not based exact science, it employs various
+heuristics to make a large log more approachable for system
+administrators and investigators. However, in case of doubt, a precise
+analysis cannot be avoided by employing this tool.
+
+* Installation
+Use Python's package manager to install the tool:
+
+#+begin_src shell
+pip3 install .
+#+end_src
+
+Afterwards, you will find the main script =petit3= in
+=/home/$USER/.local/bin/=. If this directory is in you =$PATH=, just run:
+
+#+begin_src shell
+petit3 -V
+#+end_src
+* Usage
+Hash a syslog, removing reboots and all standard filters. By default
+=petit= will show a sample for all entries which are found three or
+less times.
+#+begin_src shell
+petit --hash --fingerprint /var/log/messages
+#+end_src
+
+"Hash" an Apache log
+#+begin_src
+petit --hash /var/log/httpd/access_log
+#+end_src
+
+Get a daemons report
+#+begin_src shell
+petit --daemon /var/log/messages
+#+end_src
+
+Get a host report
+#+begin_src
+petit --host /var/log/messages
+#+end_src
+
+Find qualitatively important words in your log. This is especially
+useful to help determine what should be monitored in swatch.
+#+begin_src shell
+petit --wordcount /var/log/messages
+#+end_src
+
+Graph first 60 seconds in a syslog
+#+begin_src shell
+petit -sgraph /var/log/messages
+#+end_src
+
+Track a special word you are interested in by minute
+#+begin_src shell
+cat /var/log/messages | grep error | petit --mgraph
+#+end_src
+
+Show samples for each entry
+#+begin_src shell
+petit --hash --allsample /var/log/messages
+#+end_src
+
+* :information_source: Background
+** Motivation
+Log analysis is something that all systems administrators know they
+need to do. Many of us come to this point, either because there is a
+problem, there is a security requirement from the organization, or it
+keeps you up all night wanting to know what is going on in all of that
+data.
+
+Looking for best practices for log analysis on this Internet is
+difficult at best. Many years ago, Scott McCarty discovered a script
+that hashed log files by removing all of their numbers and replacing
+them with "#" characters. The results of this simple algorithm were
+phenomenal, logs could be reduced by a factor of ten. This was much
+more readable, yet left much of the quality data that Scott McCarty
+needed to determine if there was a problem.
+
+In the years since Scott McCarty discovered that simple algorithm,
+Scott McCarty have come to discover many techniques on text analysis
+which are commonly used in linguistics and anthropology to analyze
+natural languages. This has led me to develop very simple best
+practices for analyzing logs.
+
+** The Basics
+ 1. Logs are made up of output which are programmed by human beings.
+    There are no real restraints on what is output, other than, some
+    cultural rules on being professional. This makes the output from
+    programs very much a natural language. This also makes the output
+    of someones program an approximation of the reality of what is
+    happening inside a program. This is important to remember, logs
+    are not perfect.
+
+ 2. When a systems administrator analyzes logs by changing them, he is
+    creating an approximation of an approximation of reality in side a
+    working program. This is not necessarily a bad thing, especially,
+    when the programmer never gives you better than his approximation
+    of reality anyway.
+
+ 3. In practice logs are made up of certainty and uncertainty. For
+    example, Scott McCarty knows what OpenSSH puts in the log during a
+    login, because it is common. On the other hand, Scott McCarty does
+    not now what a Compaq DL380 G3 will put in the log when it has a
+    disk controller error. This is important to remember.
+
+ 4. The basic log analysis algorithm in Petit works to remove
+    certainty, while leaving uncertainty. Stated another way, Petit
+    quantitatively removes certainty, thereby leaving uncertainty,
+    which by necessity requires qualitative analysis from a systems
+    administrator
+
+ 5. After the algorithm has been applied, the output must be read by a
+    systems administrator to determine if it is a normal or abnormal.
+    Then abnormal entries can be acted on, hopefully before there is
+    noticeable impact to your system.
+
+** Special Operations
+
+Create an on the fly driver for a nonstandard file format, then pipe
+it to Petit. Petit can hash files of non-standard types ok, but
+graphing requires the time values to be in the correct columns.
+#+begin_src shell
+cat /var/log/httpd/error_log | awk '{$1="";$5="";print}' | lt --sgraph
+#+end_src
+
+* :recycle: Changes due to porting
+This is just a port to Python3 with some minor changes. It is neither
+a rewrite nor an upgrade, just a port with a bit of restructuring and
+code style updates.
+
+Please note that there are some slight deviations compared to the
+original implementation (different rounding of floats, a catched bug
+in adding words,... ). Nevertheless, this might be a very helpful tool
+for any system administrator or first responder.

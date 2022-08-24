@@ -1,0 +1,2 @@
+include petit3/filters/*
+include petit3/fingerprints/*
