@@ -131,7 +131,7 @@ graphing requires the time values to be in the correct columns.
 cat /var/log/httpd/error_log | awk '{$1="";$5="";print}' | lt --sgraph
 #+end_src
 
-* :recycle: Changes due to porting
+* :recycle: Changes due to or in the course of porting
 This is just a port to Python3 with some minor changes. It is neither
 a rewrite nor an upgrade, just a port with a bit of restructuring and
 code style updates.
@@ -139,9 +139,10 @@ code style updates.
 Please note that there are some slight deviations compared to the
 original implementation
 - different rounding of floats
-- a catched bug in =--wordcount=
+- catched a bug in =--wordcount=
 - changes of graphing
-  - uses last log entry as starting point
+  - introduce CLI-parameter =--end= to specify either to use current
+    point in time or last entry of log file
   - does not graph "into the future" anymore
 
 Those subtle changes should make =petit= even more helpful for any
