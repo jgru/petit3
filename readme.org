@@ -31,46 +31,46 @@ means to replace variable components of log lines with a
 default =petit= will show a sample for all entries which are found
 three or less times.
 #+begin_src shell
-petit --hash --fingerprint /var/log/messages
+petit3 --hash --fingerprint /var/log/messages
 #+end_src
 
 "Hash" an Apache log, which means to replace variable components of
 log lines with a =#=-char and counting the occurence of each
 "normalized" entry:
 #+begin_src
-petit --hash /var/log/httpd/access_log
+petit3 --hash /var/log/httpd/access_log
 #+end_src
 
 Get a report of all daemons found in log file:
 #+begin_src shell
-petit --daemon /var/log/messages
+petit3 --daemon /var/log/messages
 #+end_src
 
 Get a host report:
 #+begin_src
-petit --host /var/log/messages
+petit3 --host /var/log/messages
 #+end_src
 
 Find qualitatively important words in your log. This is especially
 useful to help determine what should be monitored in swatch:
 #+begin_src shell
-petit --wordcount /var/log/messages
+petit3 --wordcount /var/log/messages
 #+end_src
 
 Graph last 60 seconds starting from now or the last entry in a syslog:
 #+begin_src shell
-petit --sgraph /var/log/messages --end last
+petit3 --sgraph /var/log/messages --end last
 #+end_src
 
 Track a special word you are interested in by minute starting from now
 or the last entry in a syslog:
 #+begin_src shell
-cat /var/log/messages | grep error | petit --mgraph
+cat /var/log/messages | grep error | petit3 --mgraph
 #+end_src
 
 Show samples for each entry:
 #+begin_src shell
-petit --hash --allsample /var/log/messages
+petit3 --hash --allsample /var/log/messages
 #+end_src
 
 * :information_source: Background
@@ -133,7 +133,7 @@ Create an on the fly driver for a nonstandard file format, then pipe
 it to Petit. Petit can hash files of non-standard types ok, but
 graphing requires the time values to be in the correct columns.
 #+begin_src shell
-cat /var/log/httpd/error_log | awk '{$1="";$5="";print}' | lt --sgraph
+cat /var/log/httpd/error_log | awk '{$1="";$5="";print}' | petit3 --sgraph
 #+end_src
 
 * :recycle: Changes due to or in the course of porting
