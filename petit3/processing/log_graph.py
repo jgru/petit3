@@ -242,8 +242,8 @@ class GraphHash(UserDict):
         print(
             "Duration:\t",
             str(self.duration),
-            self.unit + "s",
-            f"\t\t\tScale: {scale:.12f}",
+            self.unit,
+            f"\t\t\tScale: {scale:.2f}",
         )
         print()
 
