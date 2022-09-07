@@ -13,8 +13,6 @@ import sys
 from collections import UserList
 from contextlib import contextmanager
 
-from . import log_entries
-
 
 class Tally:
 
