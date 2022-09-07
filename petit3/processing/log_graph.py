@@ -130,14 +130,14 @@ class GraphHash(UserDict):
             for key in sorted(self.keys()):
 
                 if self[key] >= i:
-                    sys.stdout.write(char_fill)
+                    print(char_fill, end="")
                 else:
-                    sys.stdout.write(char_blank)
+                    print(char_blank, end="")
             print()
 
         # Print line of '#' charachters at bottom of screen
         for key in list(self.keys()):
-            sys.stdout.write(char_fill)
+            print(char_fill, end="")
         print()
 
         # Determine numbers for normal and wide graphs
@@ -169,15 +169,15 @@ class GraphHash(UserDict):
 
             # Beginning
             if i == graph_position["begin"]:
-                sys.stdout.write(str("%.2d" % (graph_value["begin"] % 2000)))
+                print(str("%.2d" % (graph_value["begin"] % 2000)), end="")
             # Half
             elif i == graph_position["middle"]:
-                sys.stdout.write(str("%.2d" % (graph_value["middle"] % 2000)))
+                print(str("%.2d" % (graph_value["middle"] % 2000)), end="")
             # Last
             elif i == graph_position["end"]:
-                sys.stdout.write(str("%.2d" % (graph_value["end"] % 2000)))
+                print(str("%.2d" % (graph_value["end"] % 2000)), end="")
             else:
-                sys.stdout.write(" ")
+                print(" ", end="")
         print()
 
         # Create a little space at the top of the screen
