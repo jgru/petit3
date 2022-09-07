@@ -5,6 +5,7 @@ import time
 
 logger = logging.getLogger(__name__)
 
+
 class LogEntry:
     """Interface class which specifies generic log format for consumption
     by other classes"""
@@ -128,7 +129,7 @@ class SyslogEntry(LogEntry):
                 self.second,
                 self.host,
                 self.daemon,
-         ) = [1900, 1, 1, 1, 1, 1, "#", "#"]
+            ) = [1900, 1, 1, 1, 1, 1, "#", "#"]
             self.log_entry = "#"
 
     @staticmethod
@@ -143,10 +144,7 @@ class SyslogEntry(LogEntry):
                 re.search(r"[A-Z][a-z]{2}", line[0])
                 and re.search(r"[0-9][0-9]?", line[1])
                 and re.search(r"[0-9{2}:[0-9]{2}:[0-9]{2}", line[2])
-                and not (
-                    re.search(r"^pam_", line[5])
-                    or re.search(r"^sshd\[", line[4])
-                )
+                and not (re.search(r"^pam_", line[5]) or re.search(r"^sshd\[", line[4]))
             ):
                 return True
             else:
@@ -292,7 +290,7 @@ class ApacheAccessEntry(LogEntry):
             self.hour = int(self.hour)
             self.minute = int(self.minute)
             self.second = int(self.second)
-            
+
         # Abnormal log entry
         elif len(value) >= 1:
             self.set_abnormal(value)
@@ -404,7 +402,7 @@ class SecureLogEntry(LogEntry):
             self.hour = int(self.hour)
             self.minute = int(self.minute)
             self.second = int(self.second)
-            
+
         # Abnormal log entry
         elif len(value) >= 1:
             self.set_abnormal(value)
@@ -423,10 +421,7 @@ class SecureLogEntry(LogEntry):
             if (
                 re.search(r"[0-9][0-9]?", line[1])
                 and re.search(r"[0-9{2}:[0-9]{2}:[0-9]{2}", line[2])
-                and (
-                    re.search(r"^pam_", line[5])
-                    or re.search(r"^sshd\[", line[4])
-                )
+                and (re.search(r"^pam_", line[5]) or re.search(r"^sshd\[", line[4]))
             ):
                 return True
             else:
@@ -490,7 +485,7 @@ class ScriptlogEntry(LogEntry):
             self.hour = int(self.hour)
             self.minute = int(self.minute)
             self.second = int(self.second)
-            
+
         # Abnormal log entry
         elif len(value) >= 1:
             self.set_abnormal(value)

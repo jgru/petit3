@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 PRECEEDING_DIR = "/var/lib/petit/"
 FILTERS = "filters"
 
+
 class Filter:
     """Filter object used to load filters into memory once, to save on file operations"""
 
@@ -19,7 +20,7 @@ class Filter:
         os.path.join(PRECEEDING_DIR, FILTERS),  # takes precedence
         f"{os.path.dirname(os.path.dirname(__file__))}/filters/",
     ]
-    
+
     stopwords = []
 
     def __init__(self, _file=None):
@@ -27,13 +28,13 @@ class Filter:
         for _dir in self._dirs:
             if not _file:
                 return
-            
+
             # Set class variable to file & path
             self._file = os.path.join(_dir + _file)
             self.stopwords = []
 
             re.purge()  # Clear re cache
-            
+
             # Open the file and get each stopword or regex
             if os.path.exists(self._file):
                 try:

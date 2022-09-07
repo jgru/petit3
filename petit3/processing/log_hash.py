@@ -8,9 +8,15 @@ from collections import UserDict
 from random import choice
 
 from .log_crunch import CrunchLog
-from .log_entries import (ApacheAccessEntry, ApacheErrorEntry, RawEntry,
-                          RSyslogEntry, SecureLogEntry, SnortEntry,
-                          SyslogEntry)
+from .log_entries import (
+    ApacheAccessEntry,
+    ApacheErrorEntry,
+    RawEntry,
+    RSyslogEntry,
+    SecureLogEntry,
+    SnortEntry,
+    SyslogEntry,
+)
 from .log_filter import Filter
 
 logger = logging.getLogger(__name__)
@@ -22,6 +28,7 @@ STOPWORDS_HASH = "hash.stopwords"
 STOPWORDS_HOST = "host.stopwords"
 STOPWORDS_DAEMON = "daemon.stopwords"
 STOPWORDS_WORDS = "words.stopwords"
+
 
 class SuperHash(UserDict):
     """Interface and parent class for all hash/dict based objects."""
@@ -258,6 +265,7 @@ class ApacheLogHash(SuperHash):
 
         self.cleanup()
 
+
 class SnortLogHash(SuperHash):
     """Overrides the fill method specifically for LogHashes built from Snort logs"""
 
@@ -371,6 +379,7 @@ class SecureLogHash(SuperHash):
 
         self.cleanup()
 
+
 class RawLogHash(SuperHash):
     """Overrides the fill method specifically for LogHashes built from text files without date/time"""
 
@@ -425,6 +434,7 @@ class HostHash(SyslogHash):
             self.increment(key, entry)
 
         self.cleanup()
+
 
 class WordHash(SuperHash):
     """

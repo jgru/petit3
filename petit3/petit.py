@@ -26,8 +26,14 @@ __status__ = "Production"
 import argparse
 
 from .processing.log_crunch import CrunchLog
-from .processing.log_graph import (DaysGraph, HoursGraph, MinutesGraph,
-                                   MonthsGraph, SecondsGraph, YearsGraph)
+from .processing.log_graph import (
+    DaysGraph,
+    HoursGraph,
+    MinutesGraph,
+    MonthsGraph,
+    SecondsGraph,
+    YearsGraph,
+)
 from .processing.log_hash import DaemonHash, HostHash, SuperHash, WordHash
 
 logger = logging.getLogger()
@@ -42,6 +48,7 @@ signal.signal(signal.SIGINT, sigint_handler)
 
 # Ignore problems when piping to head
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
 
 def handle_cli():
     """Adds all options in one concise function"""

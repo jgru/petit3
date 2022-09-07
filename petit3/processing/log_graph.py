@@ -6,6 +6,7 @@ from math import ceil
 
 logger = logging.getLogger()
 
+
 class GraphHash(UserDict):
     """Interface class used to control structure & use of all GraphHash subtypes"""
 
@@ -27,7 +28,7 @@ class GraphHash(UserDict):
         self.scale = 0.0
         self.tick = "#"
         self.wide = False
-        
+
         self.start_date, self.middle_date = None, None
 
         if end == "last":
@@ -53,10 +54,9 @@ class GraphHash(UserDict):
         self.duration = self.duration
 
         # Save final values
-        self.start_date, self.middle_date = (
-            self.calc_dates(self.end_date, self.unit, self.duration)
+        self.start_date, self.middle_date = self.calc_dates(
+            self.end_date, self.unit, self.duration
         )
-
 
     def create_key(self, entry):
         return (
@@ -65,7 +65,7 @@ class GraphHash(UserDict):
         )
 
     def get_timedelta(self, i):
-        return {"seconds" : i}
+        return {"seconds": i}
 
     def increment(self, key):
         """Adds new entry. Similar to append method on list"""
@@ -113,9 +113,7 @@ class GraphHash(UserDict):
         graph_height = 6
         graph_width = len(self) if len(self) < 60 else 60
 
-        scale = float(
-            float(self.max_value - self.min_value) / float(graph_height)
-        )
+        scale = float(float(self.max_value - self.min_value) / float(graph_height))
         graph_position = {}
         graph_value = {}
 
@@ -167,8 +165,7 @@ class GraphHash(UserDict):
                 # Normalize because of difference between min/max
                 else:
                     self[key] = ceil(
-                        (float(self[key]) / float(graph_max_value))
-                        * graph_height
+                        (float(self[key]) / float(graph_max_value)) * graph_height
                     )
 
         # Start Graph Printing
@@ -196,9 +193,7 @@ class GraphHash(UserDict):
 
             # Calculate Positions
             graph_position["begin"] = 1
-            graph_position["middle"] = graph_width / 2 - (
-                (graph_width / 2) % 2
-            )
+            graph_position["middle"] = graph_width / 2 - ((graph_width / 2) % 2)
             graph_position["end"] = graph_width - 3
 
         else:
@@ -248,7 +243,7 @@ class GraphHash(UserDict):
             "Duration:\t",
             str(self.duration),
             self.unit + "s",
-            f"\t\t\tScale: {scale:.12f}"
+            f"\t\t\tScale: {scale:.12f}",
         )
         print()
 
@@ -270,6 +265,7 @@ class GraphHash(UserDict):
         logger.info(f"Start key {start_key}")
         return start_date, middle_date
 
+
 class SecondsGraph(GraphHash):
     """60 second graph subtype"""
 
@@ -281,7 +277,6 @@ class SecondsGraph(GraphHash):
         self.build_date_range()
         self.build_calculations()
 
-
     def create_key(self, entry):
         return (
             str(entry.year)
@@ -291,6 +286,7 @@ class SecondsGraph(GraphHash):
             + str("%.2d" % (entry.minute))
             + str("%.2d" % (entry.second))
         )
+
 
 class MinutesGraph(GraphHash):
     """60 minute graph subtype"""
@@ -306,7 +302,6 @@ class MinutesGraph(GraphHash):
         print(self.end_date)
         self.build_calculations()
 
-
     def create_key(self, entry):
         return (
             str(entry.year)
@@ -319,6 +314,7 @@ class MinutesGraph(GraphHash):
     def get_timedelta(self, i):
         return {"minutes": i}
 
+
 class HoursGraph(GraphHash):
     """24 hour graph subtype"""
 
@@ -327,9 +323,8 @@ class HoursGraph(GraphHash):
         super().__init__(log, 24, "hours", end=end)
         self.end_date.replace(second=0, minute=0)
 
-        self. build_date_range()
+        self.build_date_range()
         self.build_calculations()
-
 
     def create_key(self, entry):
         return (
@@ -342,27 +337,24 @@ class HoursGraph(GraphHash):
     def get_timedelta(self, i):
         return {"hours": i}
 
+
 class DaysGraph(GraphHash):
     """30 day graph subtype"""
-
 
     def __init__(self, log, end="now"):
         # Call parent init
         super().__init__(log, 31, "days", end=end)
         self.end_date.replace(second=0, minute=0, hour=0)
 
-        self. build_date_range()
+        self.build_date_range()
         self.build_calculations()
 
     def create_key(self, entry):
-        return (
-            str(entry.year)
-            + str("%.2d" % (entry.month))
-            + str("%.2d" % (entry.day))
-        )
+        return str(entry.year) + str("%.2d" % (entry.month)) + str("%.2d" % (entry.day))
 
     def get_timedelta(self, i):
         return {"days": i}
+
 
 class MonthsGraph(GraphHash):
     """12 month graph subtype"""
@@ -372,33 +364,29 @@ class MonthsGraph(GraphHash):
         super().__init__(log, 12, "months", end=end)
         self.end_date.replace(second=0, minute=0, hour=0, day=1)
 
-        self. build_date_range()
+        self.build_date_range()
         self.build_calculations()
 
     def create_key(self, entry):
-        return (
-            str(entry.year)
-            + str("%.2d" % (entry.month))
-        )
+        return str(entry.year) + str("%.2d" % (entry.month))
 
     def get_timedelta(self, i):
         return {"days": i * 365 / 12 + 1}
 
+
 class YearsGraph(GraphHash):
     """10 year graph subtype"""
+
     def __init__(self, log, end="now"):
         # Call parent init
         super().__init__(log, 10, "years", end=end)
         self.end_date.replace(second=0, minute=0, hour=0, day=1, month=1)
 
-        self. build_date_range()
+        self.build_date_range()
         self.build_calculations()
 
     def create_key(self, entry):
-        return (
-            str(entry.year)
-            + str("%.2d" % (entry.month))
-            + str("%.2d" % (entry.day))
-        )
+        return str(entry.year) + str("%.2d" % (entry.month)) + str("%.2d" % (entry.day))
+
     def get_timedelta(self, i):
         return {"days": i * 365}
