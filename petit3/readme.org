@@ -1,0 +1,9 @@
+#+title: Namespace Contents
+
+| Directory           | Description                                     |
+|---------------------+-------------------------------------------------|
+| petit.py            | Module implementing the CLI-tool                |
+| filter              | Contains all stopword lists and regexes         |
+| finterprints        | Fingerprint files used in analysis              |
+| fingerprint_library | Fingerprint libraries used to build files in fp |
+
