@@ -115,7 +115,7 @@ def handle_cli():
         dest="fingerprint",
         action="store_true",
         default=False,
-        help="Use fingerprinting to remove certain patterns",
+        help="Use fingerprinting to remove certain patterns, e.g., reboots.",
     )
 
     # Handle modes
