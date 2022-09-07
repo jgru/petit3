@@ -231,6 +231,7 @@ def main():
 
     # Set Verbosity
     log_level = logging.WARNING
+
     if args.verbose:
         if args.verbose == 1:
             log_level = logging.INFO
