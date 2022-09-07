@@ -150,15 +150,13 @@ system administrator or first responder.
 * Contribute
 
 All contributions are welcome, for feature requests or bug reports,
-use [[https://github.com/jgru/petit3/issues][Github Issues]]. Pull requests are welcome to help fix or add
+use [[https://github.com/jgru/petit3/issues][Github Issues]].  Pull requests are welcome to help fix or add
 features.
 
 ** Code contributions
 This repository uses the [[https://github.com/psf/black][black code style]]. To automatically format the
 code, it is recommended to [[https://github.com/psf/black/blob/master/docs/editor_integration.md][setup your editor to auto format on save]].
 
-Thanks to all the [contributors](https://github.com/mkaz/termgraph/graphs/contributors)!
-
-
 ** License
-GNU General Public License Version 3, see [[file:LICENSE.txt][COPYING]] for details.
+GNU Lesser General Public License Version 3 (LGPL 3), see [[file:LICENSE.txt][COPYING]] for
+details.
