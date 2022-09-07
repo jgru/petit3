@@ -9,11 +9,6 @@ logger = logging.getLogger()
 class GraphHash(UserDict):
     """Interface class used to control structure & use of all GraphHash subtypes"""
 
-    max_value = 0
-    min_value = 0
-    scale = 0.0
-    tick = "#"
-    wide = False
     def __init__(self, log, duration, unit):
         # Call parent init
         UserDict.__init__(self)
@@ -27,24 +22,27 @@ class GraphHash(UserDict):
         self.unit = unit
         self.duration = duration
 
+        self.max_value = 0
+        self.min_value = 0
+        self.scale = 0.0
+        self.tick = "#"
+        self.wide = False
+
 
         self.start_date, self.middle_date = None, None
 
-        self.end_date = datetime.datetime(
-            int(self.first_entry.year),
-            int(self.first_entry.month),
-            int(self.first_entry.day),
-            int(self.first_entry.hour),
-            int(self.first_entry.minute),
-            int(self.first_entry.second),
-        )
-
+        self.end_date = datetime.datetime.now()
+        # self.end_date = datetime.datetime(
+        #     int(self.first_entry.year),
+        #     int(self.first_entry.month),
+        #     int(self.first_entry.day),
+        #     int(self.first_entry.hour),
+        #     int(self.first_entry.minute),
+        #     int(self.first_entry.second),
+        # )
+        # 
         # Create a dictionary with an entry for each line.
-        for entry in log:
-            # Create key rooted in time
-            key = self.create_key(entry)
-            logger.debug(key)
-            self.increment(key)
+        self.log = log
 
     def build_date_range(self):
 
@@ -87,6 +85,13 @@ class GraphHash(UserDict):
 
     def build_calculations(self):
         """Calculates and saves important graph information"""
+
+        for entry in self.log:
+            # Create key rooted in time
+            key = self.create_key(entry)
+            logger.debug(f"Incrementing {key}")
+            if key in self.keys():
+                self.increment(key)
 
         # find max value of any key
         for key in list(self.keys()):
