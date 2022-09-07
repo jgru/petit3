@@ -4,6 +4,7 @@ import sys
 from collections import UserDict
 from math import ceil
 
+logger = logging.getLogger()
 
 class GraphHash(UserDict):
     """Interface class used to control structure & use of all GraphHash subtypes"""
@@ -60,7 +61,6 @@ class GraphHash(UserDict):
         """Common display function used by all graph subtypes"""
 
         # Declarations & Variables
-        global logging
         graph_height = 6
         graph_width = len(self)
         scale = float(
@@ -70,7 +70,7 @@ class GraphHash(UserDict):
         graph_value = {}
 
         # Debug output
-        logging.debug("length: " + str(graph_width))
+        logger.debug("length: " + str(graph_width))
 
         # Use wide scale or small scale
         if self.wide:
@@ -572,8 +572,8 @@ class MonthsGraph(GraphHash):
             end_date = start_date + datetime.timedelta(days=i * 365 / 12 + 1)
             end_key = str(end_date.year) + str("%.2d" % (end_date.month))
             self.zero(end_key)
-            logging.debug("End Date: " + str(end_date))
-            logging.debug("End Key: " + end_key)
+            logger.debug("End Date: " + str(end_date))
+            logger.debug("End Key: " + end_key)
 
             # Check for middle date and save
             if i == (self.duration / 2):
