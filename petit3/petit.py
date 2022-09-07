@@ -448,7 +448,7 @@ def mode_years_graph(args):
     log = CrunchLog(args.log.name)
 
     # Create new syslog hash based on log file and filter created
-    x = YearsGraph(log, end=args.last)
+    x = YearsGraph(log, end=args.end)
 
     # Set tick & width options
     x.tick = args.tick
