@@ -137,6 +137,12 @@ a rewrite nor an upgrade, just a port with a bit of restructuring and
 code style updates.
 
 Please note that there are some slight deviations compared to the
-original implementation (different rounding of floats, a catched bug
-in adding words,... ). Nevertheless, this might be a very helpful tool
-for any system administrator or first responder.
+original implementation
+- different rounding of floats
+- a catched bug in =--wordcount=
+- changes of graphing
+  - uses last log entry as starting point
+  - does not graph "into the future" anymore
+
+Those subtle changes should make =petit= even more helpful for any
+system administrator or first responder.
