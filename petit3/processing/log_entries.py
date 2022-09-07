@@ -9,15 +9,15 @@ class LogEntry:
     """Interface class which specifies generic log format for consumption
     by other classes"""
 
-    year = ""
-    month = ""
-    day = ""
-    hour = ""
-    minute = ""
-    second = ""
-    host = ""
-    daemon = ""
-    log_entry = ""
+    year = 0
+    month = 0
+    day = 0
+    hour = 0
+    minute = 0
+    second = 0
+    host = 0
+    daemon = 0
+    log_entry = 0
 
     def display(self):
         print(
@@ -56,7 +56,7 @@ class LogEntry:
             self.second,
             self.host,
             self.daemon,
-        ) = ["1900", "01", "01", "01", "01", "01", "#", "#"]
+        ) = [1900, 1, 1, 1, 1, 1, "#", "#"]
         self.log_entry = " ".join(value)
 
     def set_blank(self):
@@ -69,7 +69,7 @@ class LogEntry:
             self.second,
             self.host,
             self.daemon,
-        ) = ["1900", "01", "01", "01", "01", "01", "#", "#"]
+        ) = [1900, 1, 1, 1, 1, 1, "#", "#"]
         self.log_entry = "#"
 
 
@@ -96,12 +96,12 @@ class SyslogEntry(LogEntry):
             self.month = str(time.strptime(self.month, "%b")[1])
 
             # Normalize integers to standard widths and convert to strings
-            self.year = str("%.4d" % (int(self.year)))
-            self.month = str("%.2d" % (int(self.month)))
-            self.day = str("%.2d" % (int(self.day)))
-            self.hour = str("%.2d" % (int(self.hour)))
-            self.minute = str("%.2d" % (int(self.minute)))
-            self.second = str("%.2d" % (int(self.second)))
+            self.year = int(self.year)
+            self.month = int(self.month)
+            self.day = int(self.day)
+            self.hour = int(self.hour)
+            self.minute = int(self.minute)
+            self.second = int(self.second)
 
         # Abnormal log entry
         elif len(value) >= 1:
@@ -114,7 +114,7 @@ class SyslogEntry(LogEntry):
                 self.second,
                 self.host,
                 self.daemon,
-            ) = ["1900", "01", "01", "01", "01", "01", "#", "#"]
+            ) = [1900, 1, 1, 1, 1, 1, "#", "#"]
             self.log_entry = " ".join(value)
 
         # Blank line, will be sorted out by scrub
@@ -128,7 +128,7 @@ class SyslogEntry(LogEntry):
                 self.second,
                 self.host,
                 self.daemon,
-            ) = ["1900", "01", "01", "01", "01", "01", "#", "#"]
+         ) = [1900, 1, 1, 1, 1, 1, "#", "#"]
             self.log_entry = "#"
 
     @staticmethod
@@ -190,12 +190,12 @@ class RSyslogEntry(LogEntry):
             self.log_entry = " ".join(value[3:])
 
             # Normalize integers to standard widths and convert to strings
-            self.year = str("%.4d" % (int(self.year)))
-            self.month = str("%.2d" % (int(self.month)))
-            self.day = str("%.2d" % (int(self.day)))
-            self.hour = str("%.2d" % (int(self.hour)))
-            self.minute = str("%.2d" % (int(self.minute)))
-            self.second = str("%.2d" % (int(self.second)))
+            self.year = int(self.year)
+            self.month = int(self.month)
+            self.day = int(self.day)
+            self.hour = int(self.hour)
+            self.minute = int(self.minute)
+            self.second = int(self.second)
 
         # Abnormal log entry
         elif len(value) >= 1:
@@ -208,7 +208,7 @@ class RSyslogEntry(LogEntry):
                 self.second,
                 self.host,
                 self.daemon,
-            ) = ["1900", "01", "01", "01", "01", "01", "#", "#"]
+            ) = [1900, 1, 1, 1, 1, 1, "#", "#"]
             self.log_entry = " ".join(value)
 
         # Blank line, will be sorted out by scrub
@@ -222,7 +222,7 @@ class RSyslogEntry(LogEntry):
                 self.second,
                 self.host,
                 self.daemon,
-            ) = ["1900", "01", "01", "01", "01", "01", "#", "#"]
+            ) = [1900, 1, 1, 1, 1, 1, "#", "#"]
             self.log_entry = "#"
 
     @staticmethod
@@ -286,13 +286,13 @@ class ApacheAccessEntry(LogEntry):
             self.month = time.strptime(self.month, "%b")[1]
 
             # Normalize integers to standard widths and convert to strings
-            self.year = str("%.4d" % (int(self.year)))
-            self.month = str("%.2d" % (int(self.month)))
-            self.day = str("%.2d" % (int(self.day)))
-            self.hour = str("%.2d" % (int(self.hour)))
-            self.minute = str("%.2d" % (int(self.minute)))
-            self.second = str("%.2d" % (int(self.second)))
-
+            self.year = int(self.year)
+            self.month = int(self.month)
+            self.day = int(self.day)
+            self.hour = int(self.hour)
+            self.minute = int(self.minute)
+            self.second = int(self.second)
+            
         # Abnormal log entry
         elif len(value) >= 1:
             self.set_abnormal(value)
@@ -343,13 +343,12 @@ class ApacheErrorEntry(LogEntry):
             self.year = re.sub(r"\]", "", self.year)
 
             # Normalize integers to standard widths and convert to strings
-            self.year = str("%.4d" % (int(self.year)))
-            self.month = str("%.2d" % (int(self.month)))
-            self.day = str("%.2d" % (int(self.day)))
-            self.hour = str("%.2d" % (int(self.hour)))
-            self.minute = str("%.2d" % (int(self.minute)))
-            self.second = str("%.2d" % (int(self.second)))
-
+            self.year = int(self.year)
+            self.month = int(self.month)
+            self.day = int(self.day)
+            self.hour = int(self.hour)
+            self.minute = int(self.minute)
+            self.second = int(self.second)
         # Abnormal log entry
         elif len(value) >= 1:
             self.set_abnormal(value)
@@ -399,13 +398,13 @@ class SecureLogEntry(LogEntry):
             self.month = str(time.strptime(self.month, "%b")[1])
 
             # Normalize integers to standard widths
-            self.year = str("%.4d" % (int(self.year)))
-            self.month = str("%.2d" % (int(self.month)))
-            self.day = str("%.2d" % (int(self.day)))
-            self.hour = str("%.2d" % (int(self.hour)))
-            self.minute = str("%.2d" % (int(self.minute)))
-            self.second = str("%.2d" % (int(self.second)))
-
+            self.year = int(self.year)
+            self.month = int(self.month)
+            self.day = int(self.day)
+            self.hour = int(self.hour)
+            self.minute = int(self.minute)
+            self.second = int(self.second)
+            
         # Abnormal log entry
         elif len(value) >= 1:
             self.set_abnormal(value)
@@ -485,13 +484,13 @@ class ScriptlogEntry(LogEntry):
             self.hour, self.minute, self.second = time.split(":")
 
             # Normalize integers to standard widths and convert to strings
-            self.year = str("%.4d" % (int(self.year)))
-            self.month = str("%.2d" % (int(self.month)))
-            self.day = str("%.2d" % (int(self.day)))
-            self.hour = str("%.2d" % (int(self.hour)))
-            self.minute = str("%.2d" % (int(self.minute)))
-            self.second = str("%.2d" % (int(self.second)))
-
+            self.year = int(self.year)
+            self.month = int(self.month)
+            self.day = int(self.day)
+            self.hour = int(self.hour)
+            self.minute = int(self.minute)
+            self.second = int(self.second)
+            
         # Abnormal log entry
         elif len(value) >= 1:
             self.set_abnormal(value)
@@ -553,12 +552,12 @@ class SnortEntry(LogEntry):
             self.hour, self.minute, self.second = snortdate.split(":")
 
             # Normalize integers to standard widths and convert to strings
-            self.year = str("%.4d" % (int(self.year)))
-            self.month = str("%.2d" % (int(self.month)))
-            self.day = str("%.2d" % (int(self.day)))
-            self.hour = str("%.2d" % (int(self.hour)))
-            self.minute = str("%.2d" % (int(self.minute)))
-            self.second = str("%.2d" % (int(self.second)))
+            self.year = int(self.year)
+            self.month = int(self.month)
+            self.day = int(self.day)
+            self.hour = int(self.hour)
+            self.minute = int(self.minute)
+            self.second = int(self.second)
 
         # Abnormal value
         elif len(value) >= 1:
