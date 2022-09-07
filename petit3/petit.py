@@ -25,7 +25,6 @@ __status__ = "Production"
 
 import argparse
 
-# sys.path.append("/usr/share/petit")
 from .processing.log_crunch import CrunchLog
 from .processing.log_graph import (DaysGraph, HoursGraph, MinutesGraph,
                                    MonthsGraph, SecondsGraph, YearsGraph)
