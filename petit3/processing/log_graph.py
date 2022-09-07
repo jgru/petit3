@@ -9,7 +9,7 @@ logger = logging.getLogger()
 class GraphHash(UserDict):
     """Interface class used to control structure & use of all GraphHash subtypes"""
 
-    def __init__(self, log, duration, unit):
+    def __init__(self, log, duration, unit, end="now"):
         # Call parent init
         UserDict.__init__(self)
 
@@ -27,24 +27,23 @@ class GraphHash(UserDict):
         self.scale = 0.0
         self.tick = "#"
         self.wide = False
-
+        
         self.start_date, self.middle_date = None, None
 
-        self.end_date = datetime.datetime(
-            int(self.first_entry.year),
-            int(self.first_entry.month),
-            int(self.first_entry.day),
-            int(self.first_entry.hour),
-            int(self.first_entry.minute),
-            int(self.first_entry.second),
-        )
-
+        if end == "last":
+            self.end_date = datetime.datetime(
+                int(self.first_entry.year),
+                int(self.first_entry.month),
+                int(self.first_entry.day),
+                int(self.first_entry.hour),
+                int(self.first_entry.minute),
+                int(self.first_entry.second),
+            )
+        else:
+            self.end_date = datetime.datetime.now()
+        #
         # Create a dictionary with an entry for each line.
-        for entry in log:
-            # Create key rooted in time
-            key = self.create_key(entry)
-            logger.debug(key)
-            self.increment(key)
+        self.log = log
 
     def build_date_range(self):
 
@@ -57,6 +56,7 @@ class GraphHash(UserDict):
         self.start_date, self.middle_date = (
             self.calc_dates(self.end_date, self.unit, self.duration)
         )
+
 
     def create_key(self, entry):
         return (
@@ -111,7 +111,8 @@ class GraphHash(UserDict):
 
         # Declarations & Variables
         graph_height = 6
-        graph_width = len(self)
+        graph_width = len(self) if len(self) < 60 else 60
+
         scale = float(
             float(self.max_value - self.min_value) / float(graph_height)
         )
@@ -260,7 +261,7 @@ class GraphHash(UserDict):
             # Calculate the current date, the last one will be the end date
             start_date = end_date - datetime.timedelta(**(self.get_timedelta(i)))
             start_key = self.create_key(start_date)
-
+            logger.debug(f"DR key: {start_key}")
             self.zero(start_key)
 
             # Check for middle date and save
@@ -272,19 +273,29 @@ class GraphHash(UserDict):
 class SecondsGraph(GraphHash):
     """60 second graph subtype"""
 
-    def __init__(self, log):
+    def __init__(self, log, end="now"):
 
         # Call parent init
-        super().__init__(log, 60, "seconds")
+        super().__init__(log, 60, "seconds", end=end)
 
-        self. build_date_range()
+        self.build_date_range()
         self.build_calculations()
 
+
+    def create_key(self, entry):
+        return (
+            str(entry.year)
+            + str("%.2d" % (entry.month))
+            + str("%.2d" % (entry.day))
+            + str("%.2d" % (entry.hour))
+            + str("%.2d" % (entry.minute))
+            + str("%.2d" % (entry.second))
+        )
 
 class MinutesGraph(GraphHash):
     """60 minute graph subtype"""
 
-    def __init__(self, log):
+    def __init__(self, log, end="now"):
         # Call parent init
         super().__init__(log, 60, "minutes")
 
@@ -311,9 +322,9 @@ class MinutesGraph(GraphHash):
 class HoursGraph(GraphHash):
     """24 hour graph subtype"""
 
-    def __init__(self, log):
+    def __init__(self, log, end="now"):
         # Call parent init
-        super().__init__(log, 24, "hours")
+        super().__init__(log, 24, "hours", end=end)
         self.end_date.replace(second=0, minute=0)
 
         self. build_date_range()
@@ -335,9 +346,9 @@ class DaysGraph(GraphHash):
     """30 day graph subtype"""
 
 
-    def __init__(self, log):
+    def __init__(self, log, end="now"):
         # Call parent init
-        super().__init__(log, 31, "days")
+        super().__init__(log, 31, "days", end=end)
         self.end_date.replace(second=0, minute=0, hour=0)
 
         self. build_date_range()
@@ -356,9 +367,9 @@ class DaysGraph(GraphHash):
 class MonthsGraph(GraphHash):
     """12 month graph subtype"""
 
-    def __init__(self, log):
+    def __init__(self, log, end="now"):
         # Call parent init
-        super().__init__(log, 12, "months")
+        super().__init__(log, 12, "months", end=end)
         self.end_date.replace(second=0, minute=0, hour=0, day=1)
 
         self. build_date_range()
@@ -375,9 +386,9 @@ class MonthsGraph(GraphHash):
 
 class YearsGraph(GraphHash):
     """10 year graph subtype"""
-    def __init__(self, log):
+    def __init__(self, log, end="now"):
         # Call parent init
-        super().__init__(log, 10, "years")
+        super().__init__(log, 10, "years", end=end)
         self.end_date.replace(second=0, minute=0, hour=0, day=1, month=1)
 
         self. build_date_range()

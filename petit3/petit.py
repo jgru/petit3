@@ -208,6 +208,8 @@ def handle_cli():
         help="show graph of first 10 years",
     )
 
+    parser.add_argument("--end", choices=["now", "last"], default="now")
+
     parser.add_argument(
         "log",
         nargs="?",
@@ -343,7 +345,7 @@ def mode_seconds_graph(args):
     log = CrunchLog(args.log.name)
 
     # Create new syslog hash based on log file and filter created
-    x = SecondsGraph(log)
+    x = SecondsGraph(log, end=args.end)
 
     # Set tick & width options
     x.tick = args.tick
@@ -362,7 +364,7 @@ def mode_minutes_graph(args):
     log = CrunchLog(args.log.name)
 
     # Create new syslog hash based on log file and filter created
-    x = MinutesGraph(log)
+    x = MinutesGraph(log, end=args.end)
 
     # Set tick & width options
     x.tick = args.tick
@@ -400,7 +402,7 @@ def mode_days_graph(args):
     log = CrunchLog(args.log.name)
 
     # Create new syslog hash based on log file and filter created
-    x = DaysGraph(log)
+    x = DaysGraph(log, end=args.end)
 
     # Set tick & width options
     x.tick = args.tick
@@ -419,7 +421,7 @@ def mode_months_graph(args):
     log = CrunchLog(args.log.name)
 
     # Create new syslog hash based on log file and filter created
-    x = MonthsGraph(log)
+    x = MonthsGraph(log, end=args.end)
 
     # Set tick & width options
     x.tick = args.tick
@@ -438,7 +440,7 @@ def mode_years_graph(args):
     log = CrunchLog(args.log.name)
 
     # Create new syslog hash based on log file and filter created
-    x = YearsGraph(log)
+    x = YearsGraph(log, end=args.last)
 
     # Set tick & width options
     x.tick = args.tick
