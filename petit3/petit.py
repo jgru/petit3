@@ -125,7 +125,6 @@ def handle_cli():
         dest="mode",
         action="store_const",
         const="mode_version",
-        default="mode_version",
         help="Show verbose output",
     )
 
@@ -239,7 +238,11 @@ def main():
     # Set up basic configuration
     logging.basicConfig(level=log_level)
 
-    dispatch(args)
+    if args.mode:
+        dispatch(args)
+    else:
+        parser.print_help()
+        sys.exit(0)
 
 
 def print_version():
