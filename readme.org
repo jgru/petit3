@@ -150,8 +150,8 @@ system administrator or first responder.
 * Contribute
 
 All contributions are welcome, for feature requests or bug reports,
-use [Github Issues](https://github.com/jgru/petit3/issues). Pull
-requests are welcome to help fix or add features.
+use [[https://github.com/jgru/petit3/issues][Github Issues]]. Pull requests are welcome to help fix or add
+features.
 
 ** Code contributions
 This repository uses the [[https://github.com/psf/black][black code style]]. To automatically format the
