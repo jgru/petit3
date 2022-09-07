@@ -28,21 +28,23 @@ class GraphHash(UserDict):
         self.tick = "#"
         self.wide = False
 
-
         self.start_date, self.middle_date = None, None
 
-        self.end_date = datetime.datetime.now()
-        # self.end_date = datetime.datetime(
-        #     int(self.first_entry.year),
-        #     int(self.first_entry.month),
-        #     int(self.first_entry.day),
-        #     int(self.first_entry.hour),
-        #     int(self.first_entry.minute),
-        #     int(self.first_entry.second),
-        # )
-        # 
+        self.end_date = datetime.datetime(
+            int(self.first_entry.year),
+            int(self.first_entry.month),
+            int(self.first_entry.day),
+            int(self.first_entry.hour),
+            int(self.first_entry.minute),
+            int(self.first_entry.second),
+        )
+
         # Create a dictionary with an entry for each line.
-        self.log = log
+        for entry in log:
+            # Create key rooted in time
+            key = self.create_key(entry)
+            logger.debug(key)
+            self.increment(key)
 
     def build_date_range(self):
 
