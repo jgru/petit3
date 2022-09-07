@@ -1,8 +1,8 @@
-"""
-Generic log class which contains a payload of objects which conform to the
-LogEntry specification.  Log, which is a List (array) of type LogEntry,  is
-relied upon and consumed to build any of the XHash objects such as SuperHash
-or GraphHash.
+"""Generic log class which contains a payload of objects that conform
+to the LogEntry specification. Log, which is a list of type LogEntry,
+is relied upon and consumed to build any of the XHash objects such as
+SuperHash or GraphHash.
+
 """
 
 import datetime
