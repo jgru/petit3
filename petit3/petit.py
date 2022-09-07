@@ -41,8 +41,8 @@ def sigint_handler(signal, frame):
 ## Exit when control-C is pressed
 signal.signal(signal.SIGINT, sigint_handler)
 
-## Ignore problems when piping to head
-# signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+# Ignore problems when piping to head
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 def handle_cli():
     """Adds all options in one concise function"""
