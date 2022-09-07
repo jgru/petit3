@@ -25,45 +25,50 @@ Afterwards, you will find the main script =petit3= in
 petit3 -V
 #+end_src
 * Usage
-Hash a syslog, removing reboots and all standard filters. By default
-=petit= will show a sample for all entries which are found three or
-less times.
+"Hash" a syslog, removing reboots and all standard filters. "Hashing"
+means to replace variable components of log lines with a
+=#=-char and counting the occurence of each "normalized" entry. By
+default =petit= will show a sample for all entries which are found
+three or less times.
 #+begin_src shell
 petit --hash --fingerprint /var/log/messages
 #+end_src
 
-"Hash" an Apache log
+"Hash" an Apache log, which means to replace variable components of
+log lines with a =#=-char and counting the occurence of each
+"normalized" entry:
 #+begin_src
 petit --hash /var/log/httpd/access_log
 #+end_src
 
-Get a daemons report
+Get a report of all daemons found in log file:
 #+begin_src shell
 petit --daemon /var/log/messages
 #+end_src
 
-Get a host report
+Get a host report:
 #+begin_src
 petit --host /var/log/messages
 #+end_src
 
 Find qualitatively important words in your log. This is especially
-useful to help determine what should be monitored in swatch.
+useful to help determine what should be monitored in swatch:
 #+begin_src shell
 petit --wordcount /var/log/messages
 #+end_src
 
-Graph first 60 seconds in a syslog
+Graph last 60 seconds starting from now or the last entry in a syslog:
 #+begin_src shell
-petit -sgraph /var/log/messages
+petit --sgraph /var/log/messages --end last
 #+end_src
 
-Track a special word you are interested in by minute
+Track a special word you are interested in by minute starting from now
+or the last entry in a syslog:
 #+begin_src shell
 cat /var/log/messages | grep error | petit --mgraph
 #+end_src
 
-Show samples for each entry
+Show samples for each entry:
 #+begin_src shell
 petit --hash --allsample /var/log/messages
 #+end_src
@@ -138,15 +143,18 @@ code style updates.
 
 Please note that there are some slight deviations compared to the
 original implementation
-- different rounding of floats
-- catched a bug in =--wordcount=
+- precedence of directories to place filter and fingerprint files (now
+  =/var/lib/petit3/= takes precedence, otherwise the files shipped
+  with the package will be used.)
+- fixed a bug in =--wordcount=
+- different rounding of floats in graphing 
 - changes of graphing
   - introduce CLI-parameter =--end= to specify either to use current
     point in time or last entry of log file
   - does not graph "into the future" anymore
 
-Those subtle changes should make =petit= even more helpful for any
-system administrator or first responder.
+Those subtle changes should make =petit= at least as or even more
+helpful for any system administrator or first responder.
 
 * Contribute
 
