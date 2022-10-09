@@ -102,8 +102,8 @@ class CrunchLog(UserList):
 
         return entry_types
 
-    @contextmanager
     @staticmethod
+    @contextmanager
     def stream(s):
         if s == "<stdin>":
             yield sys.stdin
