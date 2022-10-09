@@ -227,8 +227,6 @@ class SuperHash(UserDict):
         # Build and return the correct subclass instance based on log file type
         return LogHash(log, _filter)
 
-    manufacture = staticmethod(manufacture)
-
 
 class SyslogHash(SuperHash):
     """Overrides the fill method specifically for LogHashes built from Syslog files"""
