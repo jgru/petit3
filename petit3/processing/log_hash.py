@@ -8,15 +8,8 @@ from collections import UserDict
 from random import choice
 
 from .log_crunch import CrunchLog
-from .log_entries import (
-    ApacheAccessEntry,
-    ApacheErrorEntry,
-    RawEntry,
-    RSyslogEntry,
-    SecureLogEntry,
-    SnortEntry,
-    SyslogEntry,
-)
+from .log_entries import (ApacheAccessEntry, ApacheErrorEntry, RawEntry,
+                          RSyslogEntry, SecureLogEntry, SnortEntry, SyslogEntry)
 from .log_filter import Filter
 
 logger = logging.getLogger(__name__)
