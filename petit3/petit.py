@@ -13,7 +13,6 @@ import logging
 import signal
 import sys
 
-from .processing import log_hash
 
 __author__ = "Scott McCarty"
 __copyright__ = "Copyright 2009, Scott McCarty"
@@ -25,6 +24,7 @@ __status__ = "Production"
 
 import argparse
 
+from .processing import log_hash
 from .processing.log_crunch import CrunchLog
 from .processing.log_graph import (
     DaysGraph,
@@ -43,7 +43,7 @@ def sigint_handler(signal, frame):
     sys.exit(0)
 
 
-## Exit when control-C is pressed
+# Exit when control-C is pressed
 signal.signal(signal.SIGINT, sigint_handler)
 
 # Ignore problems when piping to head
