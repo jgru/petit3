@@ -2,22 +2,28 @@
 line-length = 88
 target-version = ["py38", "py39", "py310"]
 
-[build-system]
-build-backend = "setuptools.build_meta"
-requires = ["setuptools", "wheel"]
+[tool.isort]
+atomic = true
+profile = "black"
+line_length = 88
+skip_gitignore = true
+skip_glob = ["tests", "doc"]
+known_first_party = ["black", "blib2to3", "blackd", "_black_version"]
 
 [tool.pyright]
 include = ["petit3"]
-exclude = ["**/doc",
+exclude = [
+    "**/doc",
     "**/__pycache__",
     "test",
     "venv"
 ]
-defineConstant = { DEBUG = true }
 venv = "venv"
 reportMissingImports = true
 reportMissingTypeStubs = false
-
 pythonVersion = "3.9"
 pythonPlatform = "Linux"
-]
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools", "wheel"]
