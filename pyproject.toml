@@ -5,3 +5,19 @@ target-version = ["py38", "py39", "py310"]
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = ["setuptools", "wheel"]
+
+[tool.pyright]
+include = ["petit3"]
+exclude = ["**/doc",
+    "**/__pycache__",
+    "test",
+    "venv"
+]
+defineConstant = { DEBUG = true }
+venv = "venv"
+reportMissingImports = true
+reportMissingTypeStubs = false
+
+pythonVersion = "3.9"
+pythonPlatform = "Linux"
+]
